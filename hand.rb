@@ -1,75 +1,72 @@
-# def janken_game(restart)
-#   return restart
-# end
       puts "じゃんけん..."
   def janken
       puts "0(グー)1(チョキ)2(パー)3(戦わない)"
         player_hand = gets.to_i
-        program_hand = rand(2)
+        program_hand = rand(0..2)
         jankens = ["グーを出しました","チョキを出しました","パーを出しました"]
       puts "ホイ！"
       puts "--------------"
       puts "あなた:#{jankens[player_hand]}\n相手:#{jankens[program_hand]}"
       
-        win = (player_hand == 0 && program_hand == 1) || (player_hand == 1 && program_hand == 2) || (player_hand == 2 && program_hand == 0)
-        lose = !(win)
-        draw = player_hand == program_hand
-        restart = (player_finger != program_face) || (player_face != program_finger)
-
-    if draw
+    if player_hand == 3
+      return false
+    end
+      
+      case_pattern = ""
+      
+    if player_hand == program_hand
       puts "あいこで..."
-        return true
-    elsif win
+      case_pattern = "パターン1"
+    elsif (player_hand == 0 && program_hand == 1) || (player_hand == 1 && program_hand == 2) || (player_hand == 2 && program_hand == 0)
       puts "あなたの勝ちです"
-        $win = "win"
-        return false
-    elsif player_hand == 3
-      puts "あなたは戦いをやめた"
-        exit
-    elsif lose
+      case_pattern = "パターン2"
+    else(player_hand == 1 && program_hand == 0) || (player_hand == 2 && program_hand == 1) || (player_hand == 0 && program_hand == 2)
       puts "あなたの負けです"
-        $lose = "lose"
-        return false
+      case_pattern = "パターン3"
+    end
+
+    case case_pattern
+      when "パターン1"
+        puts "あいこで..."
+        return true
+      when "パターン2"
+          puts "--------------"
+          puts "あっち向いて〜"
+          puts "0(上)1(下)2(左)3(右)"
+            player_finger = gets.to_i
+            program_face = rand(3)
+            direction = ["上","下","左","右"]
+          puts "ホイ！"
+          puts "--------------"
+          puts "あなた:#{direction[player_finger]}\n相手:#{direction[program_face]}"
+        if player_finger == program_face
+          puts "あなたの勝利"
+          return false
+        else 
+          puts "じゃんけん..."
+          return true
+        end
+        
+      when "パターン3"
+        puts "--------------"
+        puts "あっち向いて〜"
+        puts "0(上)1(下)2(左)3(右)"
+          player_face = gets.to_i
+          program_finger = rand(3)
+          direction = ["上","下","左","右"]
+        puts "ホイ！"
+        puts "--------------"
+        puts "あなた:#{direction[player_face]}\n相手:#{direction[program_finger]}"
+        if player_face == program_finger
+          puts "あなたの敗北"
+          return false
+        else 
+          puts "じゃんけん..."
+          return true
+        end
     end
   end
-    next_game = true
+      next_game = true
     while next_game do
       next_game = janken
-    end
-    
-    if  $win
-      puts "--------------"
-      puts "あっち向いて〜"
-      puts "0(上)1(下)2(左)3(右)"
-        player_finger = gets.to_i
-        program_face = rand(3)
-        direction = ["上","下","左","右"]
-      puts "ホイ！"
-      puts "--------------"
-      puts "あなた:#{direction[player_finger]}\n相手:#{direction[program_face]}"
-    if player_finger == program_face
-      puts "あなたの勝利"
-    elsif restart #player_finger != program_face
-      puts "やり直し"
-      $restart = "restart"
-      
-    end
-    end
-
-    if $lose
-      puts "--------------"
-      puts "あっち向いて〜"
-      puts "0(上)1(下)2(左)3(右)"
-        player_face = gets.to_i
-        program_finger = rand(3)
-        direction = ["上","下","左","右"]
-      puts "ホイ！"
-      puts "--------------"
-      puts "あなた:#{direction[player_face]}\n相手:#{direction[program_finger]}"
-    if player_face == program_finger
-      puts "あなたの敗北"
-    elsif restart #player_face != program_finger
-      puts "やり直し"
-      $restart = "restart"
-    end
     end
